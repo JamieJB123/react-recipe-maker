@@ -4,10 +4,7 @@ export default function Main() {
 
     const [ingredients, setIngredients] = useState([])
 
-    function onSubmitHandler(e) {
-        e.preventDefault();
-        console.log("Form submitted!");
-        const formData = new FormData(e.currentTarget)
+    function submitIngredient(formData) {
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
@@ -19,7 +16,7 @@ export default function Main() {
 
     return (
         <main>
-            <form onSubmit={onSubmitHandler}className="ingredient-form">
+            <form action={submitIngredient}className="ingredient-form">
                 <input name="ingredient" placeholder="e.g. oregano" aria-label="Add ingredient" type="text"></input>
                 <button>+ Add ingredient</button>
             </form>

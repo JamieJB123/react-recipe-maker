@@ -11,10 +11,6 @@ export default function Main() {
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
 
-    const ingredientElements = ingredients.map((item) => {
-        return <li key={item}>{item}</li>
-    })
-
     const [recipeShown, setRecipeShown] = useState(false)
 
     function getRecipe() {
@@ -27,7 +23,8 @@ export default function Main() {
                 <input name="ingredient" placeholder="e.g. oregano" aria-label="Add ingredient" type="text"></input>
                 <button>+ Add ingredient</button>
             </form>
-            <Ingredients ingredientElements={ingredientElements} getRecipe={getRecipe}/>
+            {ingredients.length > 0 &&
+            <Ingredients ingredients={ingredients} getRecipe={getRecipe}/>}
 
             {recipeShown &&
             <Recipe />}

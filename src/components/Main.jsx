@@ -15,7 +15,6 @@ export default function Main() {
     const [recipe, setRecipe] = useState("")
 
     async function getRecipe(ingredients) {
-        console.log("button clicked")
         const result = await getRecipeFromMistral(ingredients)
         setRecipe(result)
     }

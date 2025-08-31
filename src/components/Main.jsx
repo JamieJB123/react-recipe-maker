@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Ingredients from './Ingredients'
 import Recipe from './Recipe'
+import { getRecipeFromMistral } from '../ai'
 
 export default function Main() {
 
@@ -11,10 +12,12 @@ export default function Main() {
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
 
-    const [recipeShown, setRecipeShown] = useState(false)
+    const [recipe, setRecipe] = useState("")
 
-    function getRecipe() {
-        setRecipeShown(prevShown => !prevShown)
+    async function getRecipe(ingredients) {
+        console.log("button clicked")
+        const result = await getRecipeFromMistral(ingredients)
+        setRecipe(result)
     }
 
     return (
@@ -26,8 +29,8 @@ export default function Main() {
             {ingredients.length > 0 &&
             <Ingredients ingredients={ingredients} getRecipe={getRecipe}/>}
 
-            {recipeShown &&
-            <Recipe />}
+            {recipe &&
+            <Recipe recipe={recipe}/>}
         </main>
     )
 }

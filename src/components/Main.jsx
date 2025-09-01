@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useRef } from 'react'
+import { useEffect } from 'react'
 import Ingredients from './Ingredients'
 import Recipe from './Recipe'
 import { getRecipeFromMistral } from '../ai'
@@ -19,6 +21,15 @@ export default function Main() {
         setRecipe(result)
     }
 
+    const recipeSection = useRef(null)
+
+    useEffect(() => {
+            if (recipe && recipeSection.current) {
+                    recipeSection.current.scrollIntoView({behavior: "smooth"})
+                }
+    }, [recipe])
+
+
     return (
         <main>
             <form action={submitIngredient}className="ingredient-form">
@@ -26,7 +37,7 @@ export default function Main() {
                 <button>+ Add ingredient</button>
             </form>
             {ingredients.length > 0 &&
-            <Ingredients ingredients={ingredients} getRecipe={getRecipe}/>}
+            <Ingredients ref={recipeSection}ingredients={ingredients} getRecipe={getRecipe}/>}
 
             {recipe &&
             <Recipe recipe={recipe}/>}
